@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+
+.animation {
+  width: 400px;
+  height: 80px;
+  margin: 10px auto;
+  background-color: red;
+}
