@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 
 const OurEnd = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 600) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <footer id="footer" class="footer">
       <div class="container">
@@ -40,7 +55,7 @@ const OurEnd = () => {
       </div>
 
       <div id="scroll-Top">
-        <div class="return-to-top">
+        <div class={`return-to-top ${isScrolled ? "show" : ""}`}>
           <i
             class="fa fa-angle-up "
             id="scroll-top"

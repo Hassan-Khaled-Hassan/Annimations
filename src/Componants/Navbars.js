@@ -4,6 +4,11 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 const Navbars = () => {
      const [isScrolled, setIsScrolled] = useState(false);
       useEffect(() => {
+          const sections = document.querySelectorAll("section[id]");
+          const navLinks = document.querySelectorAll(
+            ".navbar .navbar-nav .nav-link"
+          );
+          // ============================
         const handleScroll = () => {
           if (window.scrollY > 250) {
             setIsScrolled(true);
@@ -11,9 +16,44 @@ const Navbars = () => {
             setIsScrolled(false);
           }
         };
-        window.addEventListener("scroll", handleScroll);
+            function scrollActive() {
+              const scrollY = window.pageYOffset;
+              sections.forEach((current) => {
+                const sectionHeight = current.offsetHeight;
+                const sectionTop = current.offsetTop - 50;
+                const sectionId = current.getAttribute("id");
+                if (window.scrollY < 500) {
+                  navLinks.forEach((link) => {
+                    link.classList.remove("active");
+                  });
+                  navLinks[0].classList.add("active");
+                } else if (
+                  scrollY > sectionTop &&
+                  scrollY <= sectionTop + sectionHeight
+                ) {
+                  navLinks.forEach((link) => {
+                    link.classList.remove("active");
+                  });
+                  const targetLink = document.querySelector(`.navbar .navbar-nav .nav-link[href="#${sectionId}"]`);
+                   if (targetLink) {
+                     targetLink.classList.add("active");
+                   }
+                } else {
+                  const targetLink = document
+                    .querySelector(
+                      ".navbar .navbar-nav .nav-link[href*=" + sectionId + "]"
+                    )
+                    if (targetLink) {
+                     targetLink.classList.remove("active");
+                   }
+                }
+              });
+            }
+            window.addEventListener("scroll", scrollActive);
+            window.addEventListener("scroll", handleScroll);
         // Remove event listener on component unmount
         return () => {
+          window.removeEventListener("scroll", scrollActive);
           window.removeEventListener("scroll", handleScroll);
         };
       }, []);
