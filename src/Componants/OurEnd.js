@@ -16,6 +16,10 @@ const OurEnd = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const BackToTop=()=>{
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
   return (
     <footer id="footer" class="footer">
       <div class="container">
@@ -55,7 +59,10 @@ const OurEnd = () => {
       </div>
 
       <div id="scroll-Top">
-        <div class={`return-to-top ${isScrolled ? "show" : ""}`}>
+        <div
+          class={`return-to-top ${isScrolled ? "show" : ""}`}
+          onClick={BackToTop}
+        >
           <i
             class="fa fa-angle-up "
             id="scroll-top"
